@@ -19,3 +19,19 @@ applicability in real-world scenarios. These findings serve as a poignant remind
 interconnectedness between physical activity and nutritional habits in combatting obesity.
 
 https://www.geeksforgeeks.org/how-to-convert-categorical-variable-to-numeric-in-pandas/
+
+## diabetes
+
+https://link.springer.com/chapter/10.1007/978-981-13-8798-2_12
+
+after applying tenfold Cross- Validation and Percentage Split evaluation techniques, Random forest has been found having best accuracy on this dataset
+
+---
+
+ekai analytic ewath one wei ithn samahara wita ithn.. plot karal balan e time eka athule beheth gaddi monad une kyl
+[21:57, 18/04/2024] Loku Cir Mr. Thimira 👻: e kiynn hithannko ithn heart patient knk innaw eya smart watch ekk dala inne
+[21:58, 18/04/2024] Loku Cir Mr. Thimira 👻: long term
+[21:58, 18/04/2024] Loku Cir Mr. Thimira 👻: beheth gan time eke eyage vitals hodai eyt gann nathuwa iddi awuld kohomad
+[21:58, 18/04/2024] Loku Cir Mr. Thimira 👻: monad wela thynn wage ithn nikn
+
+https://github.com/loic2665/HeartRateToWeb
