@@ -56,7 +56,63 @@ async function bookAppointment(patientId, appointmentId) {
   }
 }
 
+async function getAppointmentDetails(appointmentId) {
+  const { data, error } = await supabaseClient
+    .from("appointments")
+    .select("id,appointment_date,hospital_id,patient_id,doctor_id")
+    .eq("id", appointmentId);
+
+  if (error) {
+    console.log(error);
+    return "Error fetching appointment details";
+  }
+
+  const appointmentDetails = data[0];
+
+  // get hospital details
+  const { data: hospitalData, error: hospitalError } = await supabaseClient
+    .from("hospitals")
+    .select("name,location")
+    .eq("id", appointmentDetails.hospital_id);
+
+  if (hospitalError) {
+    console.log(hospitalError);
+    return "Error fetching hospital details";
+  }
+
+  appointmentDetails.hospital = hospitalData[0];
+
+  // get doctor details
+  const { data: doctorData, error: doctorError } = await supabaseClient
+    .from("doctors")
+    .select("name,email")
+    .eq("id", appointmentDetails.doctor_id);
+
+  if (doctorError) {
+    console.log(doctorError);
+    return "Error fetching doctor details";
+  }
+
+  appointmentDetails.doctor = doctorData[0];
+
+  // get patient details
+  const { data: patientData, error: patientError } = await supabaseClient
+    .from("patients")
+    .select("name,email")
+    .eq("id", appointmentDetails.patient_id);
+
+  if (patientError) {
+    console.log(patientError);
+    return "Error fetching patient details";
+  }
+
+  appointmentDetails.patient = patientData[0];
+
+  return appointmentDetails;
+}
+
 module.exports = {
   getAvailableAppointments,
   bookAppointment,
+  getAppointmentDetails,
 };

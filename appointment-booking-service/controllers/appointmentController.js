@@ -2,6 +2,8 @@ const getAvailableAppointments =
   require("../dal/appointmentDAL").getAvailableAppointments;
 
 const bookAppointment = require("../dal/appointmentDAL").bookAppointment;
+const getAppointmentDetails =
+  require("../dal/appointmentDAL").getAppointmentDetails;
 
 const sendEmail = require("../utils/sendGmail").sendEmail;
 
@@ -33,7 +35,9 @@ async function bookAppointmentController(req, res) {
       data: result,
     });
 
-    sendEmail(patientEmail);
+    const appointmentDetails = await getAppointmentDetails(appointmentId);
+
+    sendEmail(patientEmail, appointmentDetails);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Error booking appointment", data: error });
