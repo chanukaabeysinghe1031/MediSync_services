@@ -15,5 +15,9 @@ router.post(
   "/get-available-appointments",
   appointmentController.getAvailableAppointmentsController
 );
+router.post(
+  "/book-appointment",
+  appointmentController.bookAppointmentController
+);
 
 module.exports = router;

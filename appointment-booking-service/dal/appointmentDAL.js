@@ -44,6 +44,19 @@ async function getAvailableAppointments(email) {
   return appointmentsData;
 }
 
+async function bookAppointment(patientId, appointmentId) {
+  const { data, error } = await supabaseClient
+    .from("appointments")
+    .update({ booked: true, patient_id: patientId })
+    .eq("id", appointmentId);
+
+  if (error) {
+    console.log(error);
+    return "Error booking appointment";
+  }
+}
+
 module.exports = {
   getAvailableAppointments,
+  bookAppointment,
 };
