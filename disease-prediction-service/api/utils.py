@@ -2,7 +2,7 @@ from collections import Counter
 import numpy as np
 from joblib import load
 
-from model_helper_indexes import symptom_index, predictions_classes
+from model_helper_indexes import symptom_index, predictions_classes, disease_to_doctor_dict
 
 disease_prediction_rf_model = load(
     "../models/disease_prediction_rf_model.joblib")
@@ -44,8 +44,14 @@ def predictDiseaseUsingSymptoms(symptoms):
         "svm_model_prediction": svm_prediction,
         "final_prediction": final_prediction
     }
-    print("predictions: ", predictions)
+
     return predictions
 
 
-predictDiseaseUsingSymptoms("Itching,Skin Rash,Nodal Skin Eruptions")
+# predictDiseaseUsingSymptoms("Itching,Skin Rash,Nodal Skin Eruptions")
+
+def recommendDocotr(disease):
+    if disease in disease_to_doctor_dict:
+        return disease_to_doctor_dict[disease]
+    else:
+        return "General Practitioner"
