@@ -1,5 +1,5 @@
 const express = require("express");
-
+const cors = require("cors");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
@@ -10,6 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const routes = require("./routes/routes");
 
+app.use(cors());
 app.use(express.json());
 app.use(morgan("combined"));
 app.use(bodyParser.json());
