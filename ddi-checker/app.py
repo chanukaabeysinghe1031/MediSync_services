@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
 
-from drugsData import get_interaction_level
+from drugsData import get_interaction_level, create_drug_dict
 
 app = FastAPI()
 
@@ -27,6 +27,15 @@ def ddi_checker(drugs: drugs):
         interaction_level = get_interaction_level(
             drugs.drugA, drugs.drugB)
         return {"interaction_level": interaction_level}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/drugs_list")
+def drugs_list():
+    try:
+        drugA_list, drugB_list = create_drug_dict()
+        return {"drugA_list": drugA_list, "drugB_list": drugB_list}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
