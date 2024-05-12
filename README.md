@@ -35,3 +35,6 @@ ekai analytic ewath one wei ithn samahara wita ithn.. plot karal balan e time ek
 [21:58, 18/04/2024] Loku Cir Mr. Thimira 👻: monad wela thynn wage ithn nikn
 
 https://github.com/loic2665/HeartRateToWeb
+[Drug interaction API](https://dev.drugbank.com/demo/ddi_checker)
+[ddi academic paper](https://academic.oup.com/nar/article/50/D1/D1200/6389535#325785856)
+[ddi csvs](http://ddinter.scbdd.com/download/)
