@@ -1,47 +1,51 @@
 const supabaseClient = require("../supabaseClient").supabaseClient;
 
-async function getAvailableAppointments(email) {
-  const { data, error } = await supabaseClient
+async function getAvailableAppointments(specialty) {
+  const { data: doctorsData, error } = await supabaseClient
     .from("doctors")
-    .select("id")
-    .eq("email", email);
+    .select("*")
+    .eq("specialty", specialty);
 
   if (error) {
     console.log(error);
     return "Error fetching doctor id";
   }
 
-  const doctorId = data[0].id;
+  console.log(doctorsData);
 
-  // get available appointments for the doctor
-  const { data: appointmentsData, error: appointmentsError } =
-    await supabaseClient
-      .from("appointments")
-      .select("id,appointment_date,hospital_id")
-      .eq("doctor_id", doctorId)
-      .not("booked", "eq", true);
+  for (let i = 0; i < doctorsData.length; i++) {
+    const doctorId = doctorsData[i].id;
 
-  if (appointmentsError) {
-    console.log(appointmentsError);
-    return "Error fetching available appointments";
-  }
+    // get available appointments for the doctor
+    const { data: appointmentsData, error: appointmentsError } =
+      await supabaseClient
+        .from("appointments")
+        .select("id,appointment_date,hospital_id")
+        .eq("doctor_id", doctorId)
+        .not("booked", "eq", true);
 
-  //get hospital details
-  for (let i = 0; i < appointmentsData.length; i++) {
-    const { data: hospitalData, error: hospitalError } = await supabaseClient
-      .from("hospitals")
-      .select("name,location")
-      .eq("id", appointmentsData[i].hospital_id);
-
-    if (hospitalError) {
-      console.log(hospitalError);
-      return "Error fetching hospital details";
+    if (appointmentsError) {
+      console.log(appointmentsError);
+      return "Error fetching available appointments";
     }
 
-    appointmentsData[i].hospital = hospitalData[0];
-  }
+    //get hospital details
+    for (let i = 0; i < appointmentsData.length; i++) {
+      const { data: hospitalData, error: hospitalError } = await supabaseClient
+        .from("hospitals")
+        .select("name,location")
+        .eq("id", appointmentsData[i].hospital_id);
 
-  return appointmentsData;
+      if (hospitalError) {
+        console.log(hospitalError);
+        return "Error fetching hospital details";
+      }
+
+      appointmentsData[i].hospital = hospitalData[0];
+    }
+    doctorsData[i].appointments = appointmentsData;
+  }
+  return doctorsData;
 }
 
 async function bookAppointment(patientId, appointmentId) {

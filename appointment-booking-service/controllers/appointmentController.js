@@ -8,10 +8,10 @@ const getAppointmentDetails =
 const sendEmail = require("../utils/sendGmail").sendEmail;
 
 async function getAvailableAppointmentsController(req, res) {
-  const { email } = req.body;
+  const { specialty } = req.body;
 
   try {
-    const result = await getAvailableAppointments(email);
+    const result = await getAvailableAppointments(specialty);
     res.status(200).json({
       message: "Available appointments fetched successfully",
       data: result,
